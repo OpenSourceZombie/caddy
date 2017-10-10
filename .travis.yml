@@ -15,10 +15,6 @@ install:
   # Install Ansible.
   - sudo pip install ansible
 
-  # install the role
-  - pwd
-  - ls -alh
-
 script:
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
   - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
