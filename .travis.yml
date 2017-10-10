@@ -12,7 +12,8 @@ install:
   - sudo pip install ansible
 
   # install the role
-  - sudo ansible-galaxy install OpenSourceZombie.caddy
+  - pwd
+  - ls -alh
 
 script:
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
