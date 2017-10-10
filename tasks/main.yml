@@ -1,0 +1,72 @@
+---
+# tasks file for theShirbiny.caddy
+- name: create caddy user
+  user:
+      name: "{{caddy_user}}"
+      state: present
+      shell: /sbin/nologin
+      createhome: no
+
+- name: download caddy binary
+  unarchive:
+      src: https://caddyserver.com/download/linux/amd64?license=personal
+      dest: /usr/local/bin
+      mode: 0755
+      owner: "{{caddy_user}}"
+      group: root
+      remote_src: yes
+
+- name: set capabilities
+  capabilities:
+      path: /usr/local/bin/caddy
+      capability: cap_net_bind_service+ep
+      state: present
+
+- name: create etc directory
+  file:
+      path: /etc/caddy
+      state: directory
+      owner: "{{caddy_user}}"
+      group: root
+
+- name: copy Caddyfile
+  copy:
+      src: Caddyfile
+      dest: /etc/caddy
+      remote_src: no
+
+- name: create ssl directory
+  file:
+      path: /etc/ssl/caddy
+      state: directory
+      owner: "{{caddy_user}}"
+      group: root
+      mode: 0770
+
+- name: create caddy default home
+  file:
+      path: /var/www/caddy
+      state: directory
+      owner: "{{caddy_user}}"
+      group: root
+      mode: 0770
+
+- name: add index.html
+  copy:
+      src: index.html
+      dest: /var/www/caddy
+      owner: "{{caddy_user}}"
+      group: root
+
+- name: create systemd service
+  template:
+      src: caddy.service
+      dest: /etc/systemd/system/caddy.service
+      owner: root
+      group: root
+
+- name: start and enable caddy service
+  service:
+      name: caddy
+      state: started
+      enabled: yes
