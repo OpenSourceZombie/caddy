@@ -58,17 +58,12 @@
       owner: "{{caddy_user}}"
       group: root
 
-
 - name: create systemd service
   template:
       src: caddy.service
       dest: /lib/systemd/system/caddy.service
       owner: root
       group: root
-
-- name: reload systemd configs
-  systemd:
-      daemon_reload: yes
 
 - name: start and enable caddy service
   service:
