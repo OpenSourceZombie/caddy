@@ -3,6 +3,10 @@ language: python
 python: "2.7"
 sudo: true
 
+env:
+    global:
+    - ANSIBLE_ROLES_PATH=/home/travis/build
+
 before_install:
   # Make sure everything's up to date.
   - sudo apt-get update -qq
