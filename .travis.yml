@@ -11,8 +11,8 @@ install:
   # Install Ansible.
   - sudo apt-get install ansible -qqyy
 
-  # Add ansible.cfg to pick up roles path.
-  - ansible-galaxy install OpenSourceZombie.caddy
+  # install the role
+  - sudo ansible-galaxy install OpenSourceZombie.caddy
 
 script:
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
