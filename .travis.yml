@@ -9,7 +9,7 @@ before_install:
 
 install:
   # Install Ansible.
-  - sudo apt-get install ansible -qqyy
+  - sudo pip install ansible
 
   # install the role
   - sudo ansible-galaxy install OpenSourceZombie.caddy
