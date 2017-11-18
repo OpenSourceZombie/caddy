@@ -64,6 +64,24 @@
       dest: /lib/systemd/system/caddy.service
       owner: root
       group: root
+  when: ansible_service_mgr == "systemd"
+
+- name: create upstart service file centos6
+  template:
+      src: caddy.service
+      dest: caddy.conf.centos-6
+      owner: root
+      group: root
+  when: ansible_service_mgr == "upstart" and ansible_distribution_major_version == "6"
+
+- name: create upstart service for ubuntu < 16.04
+  template:
+      src: caddy.conf.ubuntu-12.04
+      dest: /etc/init/caddy.conf
+      owner: root
+      group: root
+  when: ansible_service_mgr == "upstart" and ansible_distribution == "Ubuntu" 
+
 
 - name: start and enable caddy service
   service:
